@@ -1,3 +1,5 @@
+package LinkedList;
+
 import java.util.Objects;
 public class LinkedList<T> {
     private class Node { // Structure which contains data and reference to the next item of the linked list
