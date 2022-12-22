@@ -96,16 +96,12 @@ public class ArrayList<T> {
     }
     private void expand(){
         Object[] temp = new Object[this.length + 1];
-        for (int i = 0; i < this.items.length; i++){
-            temp[i] = this.items[i];
-        }
+        System.arraycopy(this.items, 0, temp, 0, this.items.length);
         this.items = temp;
     }
     private void shrink(){
         Object[] temp = new Object[this.length];
-        for (int i = 0; i < this.length; i++){
-            temp[i] = this.items[i];
-        }
+        System.arraycopy(this.items, 0, temp, 0, this.length);
         this.items = temp;
     }
 
