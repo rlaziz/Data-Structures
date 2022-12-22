@@ -69,9 +69,6 @@ public class Queue<T> {
         return removed;
     }
     public boolean remove(T data){
-        if (this.length == 0){
-            return false;
-        }
         int index = this.indexOf(data);
         if (index == -1){
             return false;
@@ -108,9 +105,7 @@ public class Queue<T> {
         return this.root.data;
     }
     public int indexOf(T data){ // Get index of the element containing given data
-        if (this.length == 0){ // Edge case
-            return -1;
-        }
+
         Node current = this.root;
         int index = 0;
         while (current != null){
@@ -121,7 +116,7 @@ public class Queue<T> {
                 index ++;
             }
         }
-        return index == this.length ? -1 : index; // If index is equal to the length of the list, then the item is not in the list, hence return -1, otw. return the index
+        return -1; // If index is equal to the length of the list, then the item is not in the list, hence return -1, otw. return the index
     }
     public boolean contains(T data){ // Returns true if data in the list, false otw.
         return this.indexOf(data) != -1;
