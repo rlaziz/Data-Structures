@@ -53,6 +53,8 @@ public class ArrayList<T> {
         for (int i = this.length; i > index; i--){
             this.items[i-1] = this.items[i];
         }
+        this.length--;
+        this.shrink();
         return removed;
     }
 
