@@ -116,7 +116,7 @@ public class ArrayList<T> {
         String result = "[";
         int commasLeft = this.length - 1;
         for (Object item : this.items){
-            result += item;
+            result += item.getClass().getSimpleName() + "(" + item + ")";
             result = (commasLeft > 0) ? result + ", " : result + "]";
             commasLeft--;
         }
