@@ -1,7 +1,5 @@
 package Queue;
 
-import LinkedList.LinkedList;
-
 import java.util.Objects;
 
 public class Queue<T> {
