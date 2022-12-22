@@ -51,7 +51,7 @@ public class ArrayList<T> {
         }
         T removed = (T) this.items[index];
         this.items[index] = null;
-        for (int i = this.length; i > index; i--){
+        for (int i = this.length - 1; i > index; i--){
             this.items[i-1] = this.items[i];
         }
         this.length--;
