@@ -1,4 +1,5 @@
 package ArrayList;
+import java.util.Arrays;
 import java.util.Objects;
 public class ArrayList<T> {
     private Object[] items;
@@ -81,7 +82,7 @@ public class ArrayList<T> {
         this.items[index] = value;
     }
 
-    private int indexOf(T item) {
+    public int indexOf(T item) {
         for (int i = 0; i < this.length; i++){
             if (Objects.equals(item,this.items[i])){
                 return i;
@@ -107,6 +108,9 @@ public class ArrayList<T> {
         this.items = temp;
     }
 
+    public Object[] asArray(){
+        return Arrays.copyOf(this.items,this.length);
+    }
     @Override
     public String toString(){
         String result = "[";
