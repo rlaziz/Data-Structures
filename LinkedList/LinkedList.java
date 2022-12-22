@@ -92,6 +92,17 @@ public class LinkedList<T> {
         this.length--;
         return removed.data;
     }
+    public boolean remove(T data){
+        if (this.length == 0){
+            return false;
+        }
+        int index = this.indexOf(data);
+        if (index == -1){
+            return false;
+        }
+        this.remove(index);
+        return true;
+    }
     public T peek(){ // Get the data of the last item
         if (this.length == 0){ // Edge case
             return null;

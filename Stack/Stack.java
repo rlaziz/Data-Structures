@@ -1,8 +1,9 @@
-package Queue;
+package Stack;
+
 
 import java.util.Objects;
 
-public class Queue<T> {
+public class Stack<T> {
     private class Node {
         private Node next;
         private T data;
@@ -11,15 +12,13 @@ public class Queue<T> {
             this.next = null;
         }
     }
-
-    private Node root;
+    private Node head;
     private int length;
-
-    public Queue(){
-        this.root = null;
+    public Stack(){
+        this.head = null;
         this.length = 0;
     }
-    public Queue(T[] items){
+    public Stack(T[] items){
         this();
         if (items == null){
             throw new NullPointerException("Input array can't be null");
@@ -30,16 +29,13 @@ public class Queue<T> {
     }
     public void add(T item){
         Node newNode = new Node(item);
-        if (this.root == null){
-            this.root = newNode;
+        if (this.head == null){ // Edge Case
+            this.head = newNode;
         }else {
-            Node current = this.root;
-            while(current.next != null){
-                current = current.next;
-            }
-            current.next = newNode;
+            newNode.next = this.head;
+            this.head = newNode;
         }
-        this.length();
+        this.length++;
     }
     public void add(T item, int index){
         if (index < 0 || index > this.length) { // Handle bad index input
@@ -47,10 +43,10 @@ public class Queue<T> {
         }
         Node newNode = new Node(item);
         if (index == 0) { // Edge case
-            newNode.next = this.root;
-            this.root = newNode;
+            newNode.next = this.head;
+            this.head = newNode;
         } else {
-            Node current = this.root;
+            Node current = this.head;
             for (int i = 0; i < index - 1; i++) { // Iterate to the input index
                 current = current.next;
             }
@@ -60,13 +56,13 @@ public class Queue<T> {
         this.length++;
     }
     public T remove(){
-        if (this.root == null){
+        if (this.length == 0){
             return null;
         }
-        T removed = this.root.data;
-        this.root = this.root.next;
+        Node removed = this.head;
+        this.head = this.head.next;
         this.length--;
-        return removed;
+        return removed.data;
     }
     public boolean remove(T data){
         if (this.length == 0){
@@ -88,10 +84,10 @@ public class Queue<T> {
         }
         Node removed;
         if(index == 0){
-            removed = this.root;
-            this.root = this.root.next;
+            removed = this.head;
+            this.head = this.head.next;
         }else {
-            Node current = this.root;
+            Node current = this.head;
             for (int i = 0; i < index - 1; i++){ // Iterate to parent of the element we want to remove
                 current = current.next;
             }
@@ -102,16 +98,16 @@ public class Queue<T> {
         return removed.data;
     }
     public T peek(){
-        if (this.root == null){ // Edge case
+        if (this.head == null){ // Edge case
             return null;
         }
-        return this.root.data;
+        return this.head.data;
     }
     public int indexOf(T data){ // Get index of the element containing given data
         if (this.length == 0){ // Edge case
             return -1;
         }
-        Node current = this.root;
+        Node current = this.head;
         int index = 0;
         while (current != null){
             if (Objects.equals(current.data,data)){ // Using this approach since data could be equal to null
@@ -137,7 +133,7 @@ public class Queue<T> {
         required.data = value;
     }
     private Node getNode(int index){
-        Node temp = this.root;
+        Node temp = this.head;
         while(index > 0){
             temp = temp.next;
             index--;
@@ -150,7 +146,7 @@ public class Queue<T> {
             return "[]";
         }
         String result = "[";
-        Node current = this.root;
+        Node current = this.head;
         int commasLeft = this.length - 1;
         while(current != null){
             result += current.data;
