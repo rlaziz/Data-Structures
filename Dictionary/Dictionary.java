@@ -1,80 +1,74 @@
 package Dictionary;
 
-import java.util.Objects;
+import ArrayList.ArrayList; // custom ArrayList
+//import java.util.ArrayList; // uncomment this line and comment out previous if you want to use built in ArrayList
 
 public class Dictionary<E,T>{
-    private Object[] keys;
-    private Object[] values;
-    private int length;
+    private final ArrayList<E> keys;
+    private final ArrayList<T> values;
 
     public Dictionary(){
-        this.keys = new Object[0];
-        this.values = new Object[0];
+        this.keys = new ArrayList<E>();
+        this.values = new ArrayList<T>();
     }
     public void add(E key, T value){
-        if (this.length == this.keys.length){
-            this.expand();
+        int index = this.indexOf(key);
+        if (index != -1){
+            ((ArrayList)this.values.get(index)).add(value);
+        }else {
+            this.keys.add(key);
+            ArrayList<T> temp = new ArrayList<T>();
+            temp.add(value);
+            this.values.add((T) temp);
         }
-        this.keys[this.length] = key;
-        this.values[this.length] = value;
-        this.length++;
     }
     public T remove(E key){
         int index = this.indexOf(key);
         if (index == -1){
             return null;
         }
-        T removed = (T) this.values[index];
-        this.keys[index] = null;
-        for (int i = this.length; i > index; i--){
-            this.keys[i-1] = this.keys[i];
-            this.values[i-1] = this.values[i];
-        }
-        this.length--;
-        this.shrink();
-        return removed;
+        this.keys.remove(index);
+        return this.values.remove(index);
     }
     public T get(E key){
         int index = this.indexOf(key);
         if (index == -1){
             return null;
         }
-        return (T) this.values[index];
+        return this.values.get(index);
     }
     public boolean set(E key, T newValue){
         int index = this.indexOf(key);
         if (index == -1){
             return false;
         }
-        this.values[index] = newValue;
+        this.values.set(index,newValue);
         return true;
     }
     public Object[] getKeys(){
-        return this.keys;
+        return this.keys.asArray();
     }
     public Object[] getValues(){
-        return this.values;
+        return this.values.asArray();
     }
     private int indexOf(E key){
-        for (int i = 0; i < this.length; i++){
-            if (Objects.equals(this.keys[i],key)){
-                return i;
-            }
+        return this.keys.indexOf(key);
+    }
+    public boolean contains(E key){
+        return this.indexOf(key) != -1;
+    }
+    public int length(){
+        return this.values.length();
+    }
+    @Override
+    public String toString(){
+        String result = "{";
+        int commasLeft = this.length() - 1;
+        for (int i = 0; i < this.length(); i++){
+            result += this.keys.get(i) + ": " + this.values.get(i);
+            result = (commasLeft > 0) ? result + ", " : result + "}";
+            commasLeft--;
         }
-        return -1;
-    }
-    private void expand(){
-        Object[] temp = new Object[this.length + 1];
-        System.arraycopy(this.keys, 0, temp, 0, this.keys.length);
-        this.keys = temp;
-        System.arraycopy(this.values, 0, temp, 0, this.values.length);
-        this.values = temp;
-    }
-    private void shrink(){
-        Object[] temp = new Object[this.length];
-        System.arraycopy(this.keys, 0, temp, 0, this.length);
-        this.keys = temp;
-        System.arraycopy(this.values, 0, temp, 0, this.length);
-        this.values = temp;
+        return result;
     }
 }
