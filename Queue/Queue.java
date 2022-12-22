@@ -1,11 +1,13 @@
 package Queue;
 
+import LinkedList.LinkedList;
+
 import java.util.Objects;
 
 public class Queue<T> {
     private class Node {
         private Node next;
-        private final T data;
+        private T data;
         public Node(T data){
             this.data = data;
             this.next = null;
@@ -118,7 +120,21 @@ public class Queue<T> {
     public int length(){
         return this.length;
     }
-
+    public void set(int index, T value){
+        if (index < 0 || index > this.length) { // Handle bad index input
+            throw new IndexOutOfBoundsException("Index has to be valid");
+        }
+        Node required = this.getNode(index);
+        required.data = value;
+    }
+    private Node getNode(int index){
+        Node temp = this.root;
+        while(index > 0){
+            temp = temp.next;
+            index--;
+        }
+        return temp;
+    }
     @Override
     public String toString(){
         if(this.length == 0){

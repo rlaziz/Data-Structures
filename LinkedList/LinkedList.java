@@ -1,9 +1,8 @@
 package LinkedList;
-
 import java.util.Objects;
 public class LinkedList<T> {
     private class Node { // Structure which contains data and reference to the next item of the linked list
-        private final T data; // Data itself
+        private T data; // Data itself
         private Node next; // Reference to the next item
         public Node(T data) {
             this.data = data;
@@ -18,11 +17,10 @@ public class LinkedList<T> {
         this.length = 0;
     }
     public LinkedList(T[] items){ // Create a linked list from given array of T objects
+        this();
         if (items == null){
             throw new NullPointerException("Input array can't be null");
         }
-        this.head = null;
-        this.length = 0;
         for (T item : items) {
             this.add(item);
         }
@@ -138,6 +136,21 @@ public class LinkedList<T> {
     }
     public int length(){
         return this.length;
+    }
+    public void set(int index, T value){
+        if (index < 0 || index > this.length) { // Handle bad index input
+            throw new IndexOutOfBoundsException("Index has to be valid");
+        }
+        Node required = this.getNode(index);
+        required.data = value;
+    }
+    private Node getNode(int index){
+        Node temp = this.head;
+        while(index > 0){
+            temp = temp.next;
+            index--;
+        }
+        return temp;
     }
 
     @Override
